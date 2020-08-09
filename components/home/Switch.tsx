@@ -11,7 +11,12 @@ export interface SwitchProps {
 export const Switch = ({ onToggle, value }: SwitchProps) => {
   return (
     <Flex justify="end" style={{ width: "100%" }}>
-      <Button onClick={() => onToggle()}>
+      <Button
+        onClick={() => onToggle()}
+        role="button"
+        title="Toggle Search Screen"
+        data-testid="switchButton"
+      >
         {!value && <FaSearch size="2em" />}
         {value && <FaWindowClose size="2em" />}
       </Button>

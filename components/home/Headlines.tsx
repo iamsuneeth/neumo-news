@@ -1,128 +1,82 @@
-import React from "react";
+import React, { useRef, useCallback } from "react";
 import { Article } from "../layouts/Article";
 import styled from "styled-components";
-import Link from "next/link";
 import { Flex } from "../common/styles/Flex";
 import { Card } from "../common/styles/Card";
-import { FaArrowRight } from "react-icons/fa";
-import { Link as StyledLink } from "../common/styles/Link";
+import { useSWRInfinite } from "swr";
+import { API_URLS } from "../../core/constants/client_api";
+import { Fetcher } from "../../core/api/client";
+import { NewsList } from "./NewsList";
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   grid-gap: 0.8rem;
   grid-auto-rows: auto;
-  grid-auto-flow: dense;
   padding: 0.8rem;
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 800px) {
     display: flex;
+    padding: 0;
     flex-flow: column;
   }
 `;
 
-const GridItem = styled(Card)<{
-  span?: number;
-  rowSpan?: number;
-  columnSpan?: number;
-}>`
-  font-weight: bold;
-  text-transform: uppercase;
-  color: #929796;
-
-  ${({ span, rowSpan = 1, columnSpan = 1 }) => {
-    if (span) {
-      return `grid-column-end: span ${span};
-      grid-row-end: span ${span};`;
-    }
-    return `
-    grid-column-end: span ${rowSpan};
-    grid-row-end: span ${columnSpan}`;
-  }};
-
-  ${({ span, rowSpan, columnSpan }) =>
-    (span || rowSpan || columnSpan) &&
-    `box-shadow: inset 8px 8px 8px #cbced1, inset -8px -8px 8px #ffffff;`};
-`;
-
-const Picture = styled.div<{ background: string }>`
-  min-height: 15rem;
-  width: 100%;
-  border-radius: 40px;
-  overflow: hidden;
-  background-image: ${({ background }) => `url(${background})`};
-  background-size: cover;
-  background-position: center;
-  box-shadow: 
-/* main shadow */ 0px 0px 2px #5f5f5f,
-    /* offset */ 0px 0px 0px 5px #ecf0f3, /*bottom right */ 8px 8px 15px #a7aaaf,
-    /* top left */ -8px -8px 15px #ffffff;
-`;
-
-const ReadMore = styled(StyledLink)`
-  box-shadow: none;
-  margin-top: 0.5rem;
-  &:hover {
-    color: #ff6584;
-  }
+const Filters = styled.aside`
+  grid-column: span 4;
 `;
 
 const GridHeader = styled.h2`
   padding: 0 1.8rem;
 `;
 
+const Secondary = styled(Flex)`
+  font-size: 80%;
+  & > div {
+    &:after {
+      content: "·";
+      margin: 0 0.2rem;
+    }
+  }
+`;
+
+const StyledH3 = styled.h3`
+  margin-top: 0;
+`;
+
 export interface HeadlinesProps {
-  headlines: any[];
+  headlines: any;
 }
 export const Headlines = ({ headlines }: HeadlinesProps) => {
+  const { data, error, size, setSize } = useSWRInfinite(
+    (index) => `${API_URLS.headlines}?page=${index + 1}`,
+    Fetcher,
+    {
+      initialData: [headlines],
+      revalidateOnFocus: false,
+      dedupingInterval: 120000,
+    }
+  );
+  const setPage = useCallback(() => setSize((size) => size + 1), []);
+
   return (
     <Article header={<GridHeader>Headlines</GridHeader>}>
       <Grid>
-        {headlines.map((headLine, index) => {
-          const props = {};
-          switch (index) {
-            case 0:
-              props["rowSpan"] = 2;
-              props["columnSpan"] = 3;
-              break;
-            case 1:
-              props["span"] = 2;
-              break;
-            case 2:
-              props["rowSpan"] = 2;
-              props["columnSpan"] = 3;
-              break;
-            case 3:
-              props["columnSpan"] = 2;
-              break;
-            default:
-          }
-
-          const propsLength = Object.keys(props).length;
-
-          return (
-            <GridItem {...props}>
-              {propsLength > 0 && <Picture background={headLine.urlToImage} />}
-              <h3 style={{ textAlign: "center" }}>{headLine.title}</h3>
-              <div style={{ height: "1px", backgroundColor: "#ff6584" }} />
-              <Flex justify="end">
-                <ReadMore
-                  href={headLine.url}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  Read more
-                  <span>
-                    <FaArrowRight style={{ marginLeft: "0.5rem" }} />
-                  </span>
-                </ReadMore>
-              </Flex>
-            </GridItem>
-          );
-        })}
+        <NewsList pagedNews={data} loadMore={setPage} currentPage={size} />
+        <Filters>
+          <Card>
+            <StyledH3 as="h4">Categories</StyledH3>
+            <ul>
+              <li>business</li>
+              <li>entertainment</li>
+              <li>general</li>
+              <li>health</li>
+              <li>science</li>
+              <li>sports</li>
+              <li>technology</li>
+            </ul>
+          </Card>
+        </Filters>
       </Grid>
-      <Flex justify="end">
-        <Link href="/headlines">See all</Link>
-      </Flex>
     </Article>
   );
 };

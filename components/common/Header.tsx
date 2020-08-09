@@ -1,12 +1,18 @@
 import React from "react";
 import { Flex } from "./styles/Flex";
-import styles from "../../styles/Home.module.css";
 import styled from "styled-components";
+import { FaNewspaper } from "react-icons/fa";
 
 const StyledHeader = styled.header`
-  height: 3rem;
+  height: 4rem;
   max-width: 1280px;
   margin: 0 auto;
+  display: flex;
+  align-items: center;
+`;
+
+const StyledName = styled.span`
+  margin-left: 0.5rem;
 `;
 
 export interface HeaderProps {}
@@ -14,8 +20,8 @@ export const Header = (props: HeaderProps) => {
   return (
     <StyledHeader>
       <Flex centered="vertical">
-        <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        <span>Neumo News</span>
+        <FaNewspaper size="2em" />
+        <StyledName>Neumo News</StyledName>
       </Flex>
     </StyledHeader>
   );
