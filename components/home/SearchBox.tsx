@@ -37,6 +37,7 @@ const StyledInput = styled.input`
   height: 3em;
   outline: none;
   border: none;
+  padding: 0 0.5rem;
 `;
 
 export interface SearchBoxProps {

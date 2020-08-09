@@ -23,6 +23,9 @@ const Grid = styled.div`
 
 const Filters = styled.aside`
   grid-column: span 4;
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const GridHeader = styled.h2`

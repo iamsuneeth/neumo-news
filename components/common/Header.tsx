@@ -9,6 +9,9 @@ const StyledHeader = styled.header`
   margin: 0 auto;
   display: flex;
   align-items: center;
+  @media screen and (max-width: 1279px) {
+    padding: 0 0.5rem;
+  }
 `;
 
 const StyledName = styled.span`
