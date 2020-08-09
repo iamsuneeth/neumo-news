@@ -34,6 +34,7 @@ Creates final production build
 
 - Add More unit tests to make future updates easier
 - Service worker and PWA
+- Accessibility changes
 
 ## Thanks
 
