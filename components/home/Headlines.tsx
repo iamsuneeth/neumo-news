@@ -32,16 +32,6 @@ const GridHeader = styled.h2`
   padding: 0 1.8rem;
 `;
 
-const Secondary = styled(Flex)`
-  font-size: 80%;
-  & > div {
-    &:after {
-      content: "·";
-      margin: 0 0.2rem;
-    }
-  }
-`;
-
 const StyledH3 = styled.h3`
   margin-top: 0;
 `;
