@@ -1,30 +1,42 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Neumo News - A News API demo
 
-## Getting Started
+The app uses [News api](https://newsapi.org/) to fetch and display lastest UK news. It also allows to search freely for news from UK sources.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+- Server Side Rendering
+- Responsive
+- Redux free 😎
+- Typescript
+- CSS in JS (Styled components)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Available Scripts
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+In the project directory, you can run:
 
-## Learn More
+### `yarn dev`
 
-To learn more about Next.js, take a look at the following resources:
+Runs the app in the development mode.<br />
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The page will reload if you make edits.<br />
+You will also see any lint errors in the console.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### `yarn test`
 
-## Deploy on Vercel
+Launches the test runner.<br />
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### `yarn build`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Creates final production build
+
+## Planned Updates
+
+- Add More unit tests to make future updates easier
+- Service worker and PWA
+
+## Thanks
+
+- [NextJs](https://nextjs.org/) - No need to say anything here!!
+- [Styled Components](https://styled-components.com/) - CSS in JS solution
+- [swr](https://swr.vercel.app/) - Mind blowing data fetching library
